@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# foreach and since seems broken, see https://github.com/yarnpkg/berry/issues/3930
+yarn run pretty
