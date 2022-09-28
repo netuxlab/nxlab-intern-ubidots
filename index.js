@@ -1,6 +1,7 @@
 // Import modules
 import { config } from './config/environment.js'
 import fastify from 'fastify'
+import { generateRoutes } from './routes/index.js'
 
 const { port } = config
 
@@ -9,9 +10,7 @@ const server = fastify({
   logger: { level: 'info' },
 })
 
-server.get('/ok', (request, reply) => {
-  reply.status(204).send()
-})
+generateRoutes(server)
 
 // Start fastify server
 try {
