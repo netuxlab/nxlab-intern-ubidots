@@ -1,4 +1,6 @@
 import { execSync } from 'child_process'
+import { config } from './../config/environment.js'
+import axios from 'axios'
 
 const generateRoutes = (server) => {
   server.get('/ok', (request, reply) => {
@@ -12,6 +14,21 @@ const generateRoutes = (server) => {
     })
 
     reply.send({ data: dateString.slice(0, -1) })
+  })
+
+  server.post('/devices', async (request, reply) => {
+    const { name } = request.body
+    const response = await axios.post(
+      'https://industrial.api.ubidots.com/api/v2.0/devices/',
+      { name },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Auth-Token': config.ubidotsToken,
+        },
+      },
+    )
+    reply.send(response.data)
   })
 }
 
